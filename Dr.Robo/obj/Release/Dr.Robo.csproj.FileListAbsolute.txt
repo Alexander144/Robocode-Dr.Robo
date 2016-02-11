@@ -1,0 +1,7 @@
+D:\Programmering\Robocode\Dr.Robo\bin\Release\Dr.Robo.dll
+D:\Programmering\Robocode\Dr.Robo\bin\Release\Dr.Robo.pdb
+D:\Programmering\Robocode\Dr.Robo\bin\Release\robocode.dll
+D:\Programmering\Robocode\Dr.Robo\bin\Release\robocode.xml
+D:\Programmering\Robocode\Dr.Robo\obj\Release\Dr.Robo.csprojResolveAssemblyReference.cache
+D:\Programmering\Robocode\Dr.Robo\obj\Release\Dr.Robo.dll
+D:\Programmering\Robocode\Dr.Robo\obj\Release\Dr.Robo.pdb
