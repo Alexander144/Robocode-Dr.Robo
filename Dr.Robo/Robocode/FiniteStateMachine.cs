@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dr.Robo.Robocode.States;
+
 
 namespace Dr.Robo.Robocode
 {
@@ -13,8 +15,16 @@ namespace Dr.Robo.Robocode
 
 		public FiniteStateMachine(State[] stateToUse)
 		{
-			_States = stateToUse;
+			stateToUse = new State[1];
 			_transitionQueue = new Queue<State>();
+
+			_transitionQueue.Enqueue(stateToUse[1] = new DefaultState());
+
+			UseState();
+		}
+
+		private void UseState()
+		{
 			
 		}
 	}

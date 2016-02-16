@@ -18,14 +18,6 @@ namespace Dr.Robo
 		private readonly FiniteStateMachine _fsm;
 		public State[] state;
 
-		public Color _BodyColor = Color.Purple;
-		public Color _GunColor = Color.LightGreen;
-		public Color _RadarColor = Color.Purple;
-		public Color _BulletColor = Color.Gold;
-		public Color _ScanArColor = Color.Pink;
-
-		public bool go = true;
-
 		public DrRobo()
 	    {
 		    _fsm = new FiniteStateMachine(state);
