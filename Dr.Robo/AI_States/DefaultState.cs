@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExampleSetup.Robocode;
+using Robocode;
 
 namespace Dr.Robo.Robocode.States
 {
@@ -15,9 +17,14 @@ namespace Dr.Robo.Robocode.States
 		private Color _BulletColor = Color.Gold;
 		private Color _ScanArColor = Color.Pink;
 
-		public DefaultState()
+		public DefaultState() : base("DefaultState")
 		{
-		
+			Robot.SetColors(_BodyColor, _GunColor, _RadarColor, _BulletColor, _ScanArColor);
+		}
+
+		public override string ProcessState()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

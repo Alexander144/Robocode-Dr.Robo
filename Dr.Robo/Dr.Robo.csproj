@@ -44,15 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI_States\DrvEngage.cs" />
+    <Compile Include="AI_States\DrvIdle.cs" />
     <Compile Include="DrRobo.cs" />
+    <Compile Include="General\MathHelpers.cs" />
+    <Compile Include="General\Point2D.cs" />
+    <Compile Include="General\Vector2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Robocode\AdvancedRobotEx.cs" />
+    <Compile Include="Robocode\EnemyData.cs" />
     <Compile Include="Robocode\FiniteStateMachine.cs" />
     <Compile Include="Robocode\State.cs" />
+    <Compile Include="AI_States\DefaultState.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AI_States\" />
-    <Folder Include="General\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
