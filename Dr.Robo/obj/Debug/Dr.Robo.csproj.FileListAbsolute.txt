@@ -19,3 +19,10 @@ D:\Programmering\Robocode\Git\Dr.Robo\bin\Debug\Dr.Robo.dll
 D:\Programmering\Robocode\Git\Dr.Robo\bin\Debug\Dr.Robo.pdb
 D:\Programmering\Robocode\Git\Dr.Robo\bin\Debug\robocode.dll
 D:\Programmering\Robocode\Git\Dr.Robo\bin\Debug\robocode.xml
+E:\Skolearbeid\Robocode\git\Dr.Robo\bin\Debug\Dr.Robo.dll
+E:\Skolearbeid\Robocode\git\Dr.Robo\bin\Debug\Dr.Robo.pdb
+E:\Skolearbeid\Robocode\git\Dr.Robo\bin\Debug\robocode.dll
+E:\Skolearbeid\Robocode\git\Dr.Robo\bin\Debug\robocode.xml
+E:\Skolearbeid\Robocode\git\Dr.Robo\obj\Debug\Dr.Robo.csprojResolveAssemblyReference.cache
+E:\Skolearbeid\Robocode\git\Dr.Robo\obj\Debug\Dr.Robo.dll
+E:\Skolearbeid\Robocode\git\Dr.Robo\obj\Debug\Dr.Robo.pdb
