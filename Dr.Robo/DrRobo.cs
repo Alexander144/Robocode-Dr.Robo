@@ -17,21 +17,26 @@ namespace Dr.Robo
 		// -------------------------------------------
 
 		private readonly FiniteStateMachine _fsm;
-
-
+		
+		private double moveDirection;
 		// P U B L I C   M E T H O D S 
 		// ---------------------------
 
 		public DrRobo()
 		{
 			// Defining the possible states for this fsm. (Also, the 1st one listed becomes the default state.)
-			_fsm = new FiniteStateMachine(new State[] { new DrvIdle(), new DrvEngage() });
+			_fsm = new FiniteStateMachine(new State[] { new DrvIdle(), new DrvEngage(),new Shoot() });
 		}
 
 
 		public override void Run()
 		{
-			InitBot();
+			while (true)
+			{
+				
+				TurnGunRight(10);
+			}
+			/*InitBot();
 
 			// Loop forever. (Exiting run means no more robot fun for us!)
 			while (true)
@@ -46,13 +51,40 @@ namespace Dr.Robo
 				// Execute any current actions. NOTE: This sometimes triggers a blocking call internally, so this should be the last thing we do in a turn!
 				Execute();
 			}
-			// ReSharper disable once FunctionNeverReturns
+			// ReSharper disable once FunctionNeverReturns*/
 		}
 
 
 		public override void OnScannedRobot(ScannedRobotEvent scanData)
 		{
-			// Storing data about scan time and Enemy for later use.
+		
+			double absoluteBearing = Heading + scanData.Bearing;
+			double BearingToGun = Utils.NormalAbsoluteAngleDegrees(absoluteBearing - GunHeading);
+
+			if (Math.Abs(BearingToGun) < 3)
+			{
+				TurnGunRight(BearingToGun);
+
+
+				if (Math.Abs(GunHeat) < 1)
+				{
+					Fire(3);
+				}
+
+			}
+			else
+			{
+			TurnGunLeft(BearingToGun);
+			}
+
+
+			if (BearingToGun == 0)
+			{
+				Scan();
+			}
+		
+
+			/*// Storing data about scan time and Enemy for later use.
 			Vector2D offset = CalculateTargetVector(HeadingRadians, scanData.BearingRadians, scanData.Distance);
 			Point2D position = new Point2D(offset.X + X, offset.Y + Y);
 			Enemy.SetEnemyData(scanData, position);
@@ -61,7 +93,7 @@ namespace Dr.Robo
 			if (!Energy.IsCloseToZero())
 			{
 				_fsm.Queue("Engage");
-			}
+			}*/
 		}
 
 

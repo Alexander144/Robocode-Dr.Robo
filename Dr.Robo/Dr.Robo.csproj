@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI_States\Flee.cs" />
     <Compile Include="AI_States\DrvEngage.cs" />
+    <Compile Include="AI_States\Shoot.cs" />
     <Compile Include="AI_States\DrvIdle.cs" />
     <Compile Include="DrRobo.cs" />
     <Compile Include="General\MathHelpers.cs" />

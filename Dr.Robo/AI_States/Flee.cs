@@ -4,13 +4,13 @@ using Santom;
 
 namespace ExampleSetup.AI_States
 {
-	public class DrvEngage : State
+	public class Flee : State
 	{
 		private Point2D _targetPosition;
 
 
-		public DrvEngage()
-			: base("Engage")
+		public Flee()
+			: base("Flee")
 		{
 			// Intentionally left blank.
 		}
