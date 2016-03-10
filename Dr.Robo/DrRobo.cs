@@ -33,8 +33,26 @@ namespace Dr.Robo
 		{
 			while (true)
 			{
-				
-				TurnGunRight(10);
+				if (Energy<20)
+				{
+					Fire(1);
+				}
+				TurnGunRight(2);
+
+				if (Others > 1)
+				{
+					Ahead(100);
+				}
+				else { }
+				if ((X > BattleFieldWidth-50)||(X<50)) {
+					double turn = 360 - Heading;
+					TurnLeft(turn);
+				}
+				if ((Y > BattleFieldHeight - 100)||(Y<50))
+				{
+					double turn = 360 - Heading;
+					TurnLeft(turn);
+				}
 			}
 			/*InitBot();
 
@@ -57,15 +75,26 @@ namespace Dr.Robo
 
 		public override void OnScannedRobot(ScannedRobotEvent scanData)
 		{
-		
-			double absoluteBearing = Heading + scanData.Bearing;
-			double BearingToGun = Utils.NormalAbsoluteAngleDegrees(absoluteBearing - GunHeading);
 
+
+			if (Others == 1)
+			{
+				if (scanData.Heading >= Heading)
+				{
+					TurnLeft(45);
+				}
+				else { TurnRight(45); }
+			}
+		/*	double absoluteBearing = Heading + scanData.Bearing;
+			double BearingToGun = Utils.NormalAbsoluteAngleDegrees(absoluteBearing - GunHeading);
+			Vector2D ToShoot = CalculateTargetVector(HeadingRadians, absoluteBearing, scanData.Distance);
+                
+				double posistion = (ToShoot.X * ToShoot.X) + (ToShoot.Y * ToShoot.Y);
+				posistion = Math.Sqrt(posistion);
+				TurnGunRight(scanData.Distance);
 			if (Math.Abs(BearingToGun) < 3)
 			{
-				TurnGunRight(BearingToGun);
-
-
+			
 				if (Math.Abs(GunHeat) < 1)
 				{
 					Fire(3);
@@ -82,7 +111,7 @@ namespace Dr.Robo
 			{
 				Scan();
 			}
-		
+		*/
 
 			/*// Storing data about scan time and Enemy for later use.
 			Vector2D offset = CalculateTargetVector(HeadingRadians, scanData.BearingRadians, scanData.Distance);
