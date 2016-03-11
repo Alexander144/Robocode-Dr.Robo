@@ -13,7 +13,9 @@ namespace ExampleSetup.AI_States
 
 		public override string ProcessState()
 		{
-			return null;
+			Robot.Ahead(100);
+
+			return "Shoot";
 		}
 	}
 }

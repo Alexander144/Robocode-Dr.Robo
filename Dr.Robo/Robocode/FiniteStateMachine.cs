@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dr.Robo;
 
 namespace ExampleSetup.Robocode
@@ -15,9 +16,9 @@ namespace ExampleSetup.Robocode
 
 		private const int SpinCount = 10;  // Max number of state transitions in one round before we trigger spin.
 		private readonly State[] _possibleStates;
-		private readonly Queue<State> _transitionQueue;
 		private State _currentState;
-
+		private State _nextState;
+		private string SwitchState = null;
 
 		// P U B L I C   M E T H O D S 
 		// ---------------------------
@@ -28,7 +29,6 @@ namespace ExampleSetup.Robocode
 		public FiniteStateMachine(State[] statesToUse)
 		{
 			_possibleStates = statesToUse;
-			_transitionQueue = new Queue<State>();
 		}
 
 
@@ -43,6 +43,7 @@ namespace ExampleSetup.Robocode
 			}
 			// Set the first state in the array as the current state when the FSM is init'ed.
 			_currentState = _possibleStates[0];
+			_nextState = _possibleStates[0];
 			_currentState.EnterState();
 		}
 
@@ -53,26 +54,10 @@ namespace ExampleSetup.Robocode
 		public string GetCurrentStateId()
 		{
 			return _currentState.Id;
+			
 		}
 
 
-		/// <summary>
-		/// Queue up a new state (as long as it is registered as a possible state for this FSM).
-		/// </summary>
-		public void Queue(string stateId)
-		{
-			State newState = null;
-			foreach (State element in _possibleStates) {
-				if (stateId == element.Id) {
-					newState = element;
-					break;
-				}
-			}
-
-			if (null != newState) {
-				_transitionQueue.Enqueue(newState);
-			}
-		}
 
 
 		/// <summary>
@@ -80,36 +65,16 @@ namespace ExampleSetup.Robocode
 		/// </summary>
 		public void Update()
 		{
-			State nextState;
-			string queueStateId;
-			int loopCounter = 0;
-
-			// Process any queued states (in order). If no new states are queued, process the current one.
-			do {
-				loopCounter++;
-				if (SpinCount < loopCounter) {
-					break;
-				}
-
-				// Swap to next state, if any are queued and current state allows a swap.
-				if (0 < _transitionQueue.Count) {
-					nextState = _transitionQueue.Dequeue();
-					if (_currentState.DoTransition(nextState.Id)) {
-						_currentState.ExitState();
-						_currentState = nextState;
-						_currentState.EnterState();
+			
+		  SwitchState = _currentState.ProcessState();
+			Console.WriteLine(SwitchState);
+				foreach (var EachState in _possibleStates)
+				{
+					if (EachState.Id == SwitchState)
+					{
+						_currentState = EachState;
 					}
-				}
-
-				// Process the AI action for the current state.
-				queueStateId = _currentState.ProcessState();
-
-				// If current AI action triggered a transition, queue it up.
-				if (null != queueStateId) {
-					Queue(queueStateId);
-				}
-
-			} while (0 < _transitionQueue.Count);
+			}
 		}
 	}
 }

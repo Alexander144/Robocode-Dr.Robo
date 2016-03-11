@@ -31,9 +31,15 @@ namespace Dr.Robo
 
 		public override void Run()
 		{
+			InitBot();
 			while (true)
 			{
-				if (Energy<20)
+
+
+
+				_fsm.Update();
+				Execute();
+				/*if (Energy<20)
 				{
 					Fire(1);
 				}
@@ -52,7 +58,7 @@ namespace Dr.Robo
 				{
 					double turn = 360 - Heading;
 					TurnLeft(turn);
-				}
+				}*/
 			}
 			/*InitBot();
 
@@ -75,7 +81,8 @@ namespace Dr.Robo
 
 		public override void OnScannedRobot(ScannedRobotEvent scanData)
 		{
-
+			EnemyData data = new EnemyData(scanData);
+			
 
 			if (Others == 1)
 			{

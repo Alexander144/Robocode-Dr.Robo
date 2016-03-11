@@ -1,4 +1,5 @@
-﻿using ExampleSetup.Robocode;
+﻿using System;
+using ExampleSetup.Robocode;
 using Santom;
 
 namespace ExampleSetup.AI_States
@@ -18,11 +19,13 @@ namespace ExampleSetup.AI_States
 			_targetPosition = Robot.Enemy.Position;
 
 			Robot.SetTurnGunRight(Robot.Enemy.BearingDegrees);
-			Robot.Fire(2);
+			
 		}
 
 		public override string ProcessState()
 		{
+			Console.WriteLine("Shoot");
+			Robot.Fire(2);
 			return null;
 		}
 	}
