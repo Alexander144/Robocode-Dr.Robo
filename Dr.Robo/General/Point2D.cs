@@ -1,6 +1,6 @@
 using System;
 
-namespace Santom
+namespace Dr.Robo
 {
 	/// <summary>
 	/// Class for storing a 2D point of type {double, double}. 

@@ -3,7 +3,7 @@ using System.Drawing;
 using Robocode;
 using Santom;
 
-namespace ExampleSetup.Robocode
+namespace Dr.Robo
 {
 	/// <summary>
 	/// Extended AdvancedRobot functionality for PG4500 robots.

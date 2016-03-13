@@ -1,8 +1,9 @@
-﻿using Robocode;
+﻿using Dr.Robo;
+using Robocode;
 using Robocode.Util;
 using Santom;
 
-namespace ExampleSetup.Robocode
+namespace Dr.Robo
 {
 	/// <summary>
 	/// Helper class, storing data about scanned enemies (including the timestamp (turn) for that scan of data). 

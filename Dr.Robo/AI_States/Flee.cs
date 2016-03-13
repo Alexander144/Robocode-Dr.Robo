@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
-using ExampleSetup.Robocode;
+
 using Santom;
 
-namespace ExampleSetup.AI_States
+namespace Dr.Robo
 {
 	public class Flee : State
 	{

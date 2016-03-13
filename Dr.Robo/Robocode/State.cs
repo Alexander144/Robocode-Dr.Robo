@@ -1,6 +1,8 @@
 ﻿using Dr.Robo;
+using Robocode;
+using System.Drawing;
 
-namespace ExampleSetup.Robocode
+namespace Dr.Robo
 {
 	/// <summary>
 	/// Base class for states in the FSM. Should be inherited from.
@@ -13,7 +15,11 @@ namespace ExampleSetup.Robocode
 		// -------------------------------------------
 
 		protected AdvancedRobotEx Robot;
-
+		public Color _BodyColor;
+		public Color _GunColor;
+		public Color _RadarColor;
+		public Color _BulletColor;
+		public Color _ScanArColor;
 
 		// P R O P E R T I E S
 		// -------------------
@@ -59,7 +65,8 @@ namespace ExampleSetup.Robocode
 		/// </summary>
 		public virtual void EnterState() 
 		{
-			Robot.Out.WriteLine("{0,6} [{1}] entered.", Robot.Time, Id);
+			Robot.SetColors(_BodyColor, _GunColor, _RadarColor, _BulletColor, _ScanArColor);
+			//Robot.Out.WriteLine("{0,6} [{1}] entered.", Robot.Time, Id);
 		}
 
 
@@ -76,5 +83,6 @@ namespace ExampleSetup.Robocode
 		/// Called once for every Update() in the "owning" StateMachine, as long as this state is queued or it is the active one with an empty queue.
 		/// </summary>
 		public abstract string ProcessState();
+	
 	}
 }

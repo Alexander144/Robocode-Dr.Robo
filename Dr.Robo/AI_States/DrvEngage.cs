@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
-using ExampleSetup.Robocode;
+
 using Santom;
 
-namespace ExampleSetup.AI_States
+namespace Dr.Robo
 {
 	public class DrvEngage : State
 	{
@@ -40,7 +40,26 @@ namespace ExampleSetup.AI_States
 				retState = "Idle";
 			} else {
 				Robot.DrawLineAndTarget(Color.LightGreen, new Point2D(Robot.X, Robot.Y), _targetPosition);
-			}
+			}   /*if (Energy<20)
+				{
+					Fire(1);
+				}
+				TurnGunRight(2);
+
+				if (Others > 1)
+				{
+					Ahead(100);
+				}
+				else { }
+				if ((X > BattleFieldWidth-50)||(X<50)) {
+					double turn = 360 - Heading;
+					TurnLeft(turn);
+				}
+				if ((Y > BattleFieldHeight - 100)||(Y<50))
+				{
+					double turn = 360 - Heading;
+					TurnLeft(turn);
+				}*/
 
 			return retState;
 		}

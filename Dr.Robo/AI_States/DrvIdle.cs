@@ -1,6 +1,6 @@
-﻿using ExampleSetup.Robocode;
+﻿
 
-namespace ExampleSetup.AI_States
+namespace Dr.Robo
 {
 	public class DrvIdle : State
 	{

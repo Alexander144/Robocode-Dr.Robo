@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dr.Robo;
+using Robocode;
 
-namespace ExampleSetup.Robocode
+namespace Dr.Robo
 {
 	/// <summary>
 	/// Generic Finite State Machine class, for hardcoded FSMs.
@@ -19,7 +20,8 @@ namespace ExampleSetup.Robocode
 		private State _currentState;
 		private State _nextState;
 		private string SwitchState = null;
-
+		
+	
 		// P U B L I C   M E T H O D S 
 		// ---------------------------
 
@@ -44,7 +46,7 @@ namespace ExampleSetup.Robocode
 			// Set the first state in the array as the current state when the FSM is init'ed.
 			_currentState = _possibleStates[0];
 			_nextState = _possibleStates[0];
-			_currentState.EnterState();
+			
 		}
 
 
@@ -65,16 +67,24 @@ namespace ExampleSetup.Robocode
 		/// </summary>
 		public void Update()
 		{
-			
+			Console.WriteLine(_currentState);
+			_currentState.EnterState();
 		  SwitchState = _currentState.ProcessState();
-			Console.WriteLine(SwitchState);
+			
 				foreach (var EachState in _possibleStates)
 				{
-					if (EachState.Id == SwitchState)
-					{
-						_currentState = EachState;
-					}
+				if (EachState.Id == SwitchState && !(SwitchState == _currentState.Id))
+				{
+
+					_currentState = EachState;
+
+				}
+				else
+				{
+					_currentState.ProcessState();
+				}
 			}
 		}
+
 	}
 }

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Dr.Robo;
+using System;
 
-namespace Santom
+namespace Dr.Robo
 {
 	public static class MathHelpers
 	{
@@ -42,6 +43,15 @@ namespace Santom
 		public static bool IsCloseToZero(this double value, double tolerance = 0.00001)
 		{
 			return (Math.Abs(value) <= tolerance);
+		}
+		public static Point2D project(Point2D sourceLocation, double angle, double length)
+		{
+			return new Point2D(sourceLocation.X + Math.Sin(angle) * length,
+					sourceLocation.Y + Math.Cos(angle) * length);
+		}
+		public static double absoluteBearing(Point2D source, Point2D target)
+		{
+			return Math.Atan2(target.X - source.X, target.Y - source.Y);
 		}
 
 	}
