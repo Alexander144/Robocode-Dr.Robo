@@ -1,5 +1,7 @@
 ﻿using Dr.Robo;
 using Robocode;
+using Robocode.Util;
+using System;
 using System.Drawing;
 
 namespace Dr.Robo
@@ -20,6 +22,8 @@ namespace Dr.Robo
 		public Color _RadarColor;
 		public Color _BulletColor;
 		public Color _ScanArColor;
+		protected double _PointToEnemy;
+		protected double _absoluteBearing;
 
 		// P R O P E R T I E S
 		// -------------------
@@ -51,12 +55,29 @@ namespace Dr.Robo
 		/// <summary>
 		/// Called repeatedly during Update() in the "owning" StateMachine, as long as there are queued states.
 		/// </summary>
-		public virtual bool DoTransition(string nextStateId)
+		public virtual bool DoScanOnRobot()
 		{
-			if (Id != nextStateId) {
+			//Hvis radaren har funnet en enemy så locker den enemyen
+			if (Robot.Enemy.LockOn == true)
+			{
+				//tar imot gradene som er fra robotoen og i forhold til robotens fiende
+				_absoluteBearing = Robot.Heading + Robot.Enemy.BearingDegrees;
+				//tar imot gradene radaren må flyye seg, ved at vi regner ut total gradene - roboten sin radar sikt i grader
+				_PointToEnemy = Utils.NormalRelativeAngleDegrees(_absoluteBearing - Robot.RadarHeading);
+
+				//Bestemmer scanne området
+				double ScanArea = Math.Min(Math.Atan(36.0 / Robot.Enemy.Distance), Rules.RADAR_TURN_RATE);
+
+				//Dette gjør sånn at vi bestemmer bevegelsesen radaren skal gå i før vi bevger på det. Sikter forran motstanderen sånn at vi skal få en smoothere bevegelse
+				_PointToEnemy += (_PointToEnemy < 0 ? -ScanArea : ScanArea);
+				Robot.TurnRadarRight(_PointToEnemy);
 				return true;
 			}
-			return false;
+			else
+			{
+				Robot.TurnRadarRight(20);
+				return false;
+			}
 		}
 
 	

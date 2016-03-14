@@ -27,19 +27,12 @@ namespace Dr.Robo
 			_targetBearing = Robot.Enemy.BearingDegrees;
 			_targetDistance = Robot.DistanceRemaining;
 			_targetEnergy = Robot.Enemy.Energy;
-			
-			
 
-			
-			
-		}
 
-		public override string ProcessState()
-		{
-			
+			Console.WriteLine(Robot.Enemy.Distance);
 			double absoluteBearing = Robot.Heading + _targetBearing;
 			double bearingToEnemy = Utils.NormalRelativeAngleDegrees(absoluteBearing - Robot.GunHeading);
-			Console.WriteLine(bearingToEnemy);
+
 			// If it's close enough, fire!
 			if (Math.Abs(bearingToEnemy) <= 0)
 			{
@@ -57,6 +50,15 @@ namespace Dr.Robo
 
 			}
 
+
+		}
+
+		public override string ProcessState()
+		{
+			
+		
+
+			
 			Robot.Fire(3);
 			return "DefaultState";
 		}

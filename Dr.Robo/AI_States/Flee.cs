@@ -19,30 +19,21 @@ namespace Dr.Robo
 		// Called once when we transition into this state.
 		public override void EnterState()
 		{
+			_BodyColor = Color.Yellow; _GunColor = Color.Yellow; _RadarColor = Color.Yellow; _BulletColor = Color.Yellow; _ScanArColor = Color.Yellow;
 			base.EnterState();
 
 			_targetPosition = Robot.Enemy.Position;
 
 			Robot.SetTurnRight(Robot.Enemy.BearingDegrees);
-			Robot.SetAhead(200);
+			Robot.SetBack(200);
 		}
 
 
 		public override string ProcessState()
 		{
-			string retState = null;
-			if (Robot.Enemy.Energy > 2)
-			{
-				retState = "Shoot";
-
-			}
-			if (Robot.DistanceCompleted()) {
-				retState = "Idle";
-			} else {
-				Robot.DrawLineAndTarget(Color.LightGreen, new Point2D(Robot.X, Robot.Y), _targetPosition);
-			}
-
-			return retState;
+			DoScanOnRobot();
+			
+			return "Flee";
 		}
 	}
 }

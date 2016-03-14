@@ -27,7 +27,7 @@ namespace Dr.Robo
 		public DrRobo()
 		{
 			// Defining the possible states for this fsm. (Also, the 1st one listed becomes the default state.)
-			_fsm = new FiniteStateMachine(new State[] { new DefaultState(),new Arrive(),new Shoot()  });
+			_fsm = new FiniteStateMachine(new State[] { new DefaultState(),new Seek(),new Shoot(),new Flee()  });
 		}
 
 
@@ -77,7 +77,7 @@ namespace Dr.Robo
 			//       each turn, no matter what IsAdjustGunForRobotTurn is set to.
 			IsAdjustGunForRobotTurn = true;
 			IsAdjustRadarForGunTurn = true;
-
+			IsAdjustRadarForRobotTurn = true;
 		}
 
 

@@ -46,7 +46,8 @@ namespace Dr.Robo
 			// Set the first state in the array as the current state when the FSM is init'ed.
 			_currentState = _possibleStates[0];
 			_nextState = _possibleStates[0];
-			
+		
+
 		}
 
 
@@ -67,23 +68,23 @@ namespace Dr.Robo
 		/// </summary>
 		public void Update()
 		{
-			
-			
-		 
-			
-				foreach (var EachState in _possibleStates)
+			foreach (var each in _possibleStates)
+			{
+				if (SwitchState == each.Id && SwitchState != _currentState.Id)
 				{
-				if (EachState.Id == SwitchState && SwitchState != _currentState.Id)
-				{
-
-					_currentState = EachState;
-					SwitchState =_currentState.EnterState();
+					_currentState = each;
+					_currentState.EnterState();
 				}
 				else
 				{
-					 _currentState.ProcessState();
+					_currentState.EnterState();
 				}
+
+				
 			}
+			SwitchState	= _currentState.ProcessState();
+			
+		
 		}
 
 	}
