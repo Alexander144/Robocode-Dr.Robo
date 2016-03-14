@@ -32,7 +32,7 @@ namespace Dr.Robo
 		public double HeadingDegrees { get { return Utils.ToDegrees(HeadingRadians); } set { HeadingRadians = Utils.ToRadians(value); } }  // Heading of enemy, in degrees.
 		public double TurnRateRadians { get; set; }  // How fast our enemy turns, in radians (change of heading per turn). (Calculated by comparing values over 2 scans.)
 		public double TurnRateDegrees { get { return Utils.ToDegrees(TurnRateRadians); } set { TurnRateRadians = Utils.ToRadians(value); } }  // How fast our enemy turns, in degrees (change of heading per turn). (Calculated by comparing values over 2 scans.)
-
+		public bool LockOn{ get; set; }
 
 		// P U B L I C   M E T H O D S 
 		// ---------------------------
@@ -52,6 +52,7 @@ namespace Dr.Robo
 			Acceleration = 0.0;
 			HeadingRadians = 0.0;
 			TurnRateRadians = 0.0;
+			LockOn = false;
 		}
 
 
@@ -115,6 +116,7 @@ namespace Dr.Robo
 			Position = newPosition;
 			Velocity = newEnemyData.Velocity;
 			HeadingRadians = newEnemyData.HeadingRadians;
+			LockOn = true;
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace Dr.Robo
 		// -------------------------------------------
 
 		private readonly FiniteStateMachine _fsm;
-
+		private bool LockOn = false;
 	
 		
 		
@@ -34,11 +34,10 @@ namespace Dr.Robo
 		public override void Run() { 
 
 
-			TurnRadarLeft(20);
+		
             InitBot();
 			while (true)
 			{
-			
 				_fsm.Update();
 				Execute();
 			
@@ -53,9 +52,9 @@ namespace Dr.Robo
             double enemyDistance = scanData.Distance;
 			Point2D robotLocation = new Point2D(X, Y);
 			Point2D enemyLocation =  MathHelpers.project(robotLocation, enemyAbsoluteBearing, enemyDistance);
+			
 			Enemy.SetEnemyData(scanData, enemyLocation);
-			
-			
+	
 		}
 
 
@@ -76,7 +75,7 @@ namespace Dr.Robo
 			// NOTE: Total distance each element can move remains the same, whether these ones are true or false. 
 			//       Example: Gun swivels a maximum of 20 degrees in addition to what the body swivels (if anything) 
 			//       each turn, no matter what IsAdjustGunForRobotTurn is set to.
-			IsAdjustGunForRobotTurn = false;
+			IsAdjustGunForRobotTurn = true;
 			IsAdjustRadarForGunTurn = true;
 
 		}

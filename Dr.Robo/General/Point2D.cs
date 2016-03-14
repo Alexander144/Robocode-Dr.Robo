@@ -96,6 +96,11 @@ namespace Dr.Robo
 		{
 			return new Point2D(lhs.X + rhs.X, lhs.Y + rhs.Y);
 		}
+		public double length()
+		{
+			double Length = Math.Sqrt((X*X)+(Y*Y));
+			return Length;
+		}
 
 		public static Point2D operator-(Point2D lhs, Point2D rhs)
 		{

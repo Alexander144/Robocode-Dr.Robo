@@ -3,6 +3,7 @@
 
 using Robocode.Util;
 using System;
+using System.Net.Http.Headers;
 
 namespace Dr.Robo
 {
@@ -19,6 +20,8 @@ namespace Dr.Robo
 		private string _targetName;
 		private int count;
 		private string trackName = null;
+		private double _targetEnergy;
+		private Point2D _targetVelocity;
 
 		public Arrive()
 			: base("Arrive")
@@ -34,40 +37,36 @@ namespace Dr.Robo
 
 			base.EnterState();
 
-			Console.WriteLine("Dette er inni ARRIVE" + Robot.Enemy.BearingDegrees);
-
 			_targetPosition = Robot.Enemy.Position;
 			_targetBearing = Robot.Enemy.BearingDegrees;
-			_targetDistance = Robot.DistanceRemaining;
-			_targetName = Robot.Enemy.Name;
-			_gunTurnAmt = Utils.NormalRelativeAngleDegrees(_targetBearing + (Robot.Heading - Robot.RadarHeading));
+			_targetDistance = Robot.Enemy.Distance;
+			_targetEnergy = Robot.Enemy.Energy;
+			
+
 		}
 
 
 		public override string ProcessState()
 		{
-			double absoluteBearing = Robot.Heading + _targetBearing;
-			double bearingToEnemy = Utils.NormalRelativeAngleDegrees(absoluteBearing - Robot.Heading);
-			Console.WriteLine(bearingToEnemy);
-			// If it's close enough, fire!
-			if (Math.Abs(bearingToEnemy) <= 0)
+			
+			/*Point2D direction = _targetPosition - new Point2D(Robot.X, Robot.Y);
+			double distance = direction.length();
+
+			if (distance<_targetDistance)
 			{
-				Robot.TurnRight(bearingToEnemy);
-
-
-
+				return "Arrive";
 			}
-			else
+
+			if (distance>50)
 			{
-				// otherwise just set the gun to turn.
-				// Note:  This will have no effect until we call scan()
-				Robot.TurnRight(bearingToEnemy);
+				Robot.Ahead(8);
+			}
+			else { Robot.Ahead(8*distance/50);}
+			_targetVelocity = direction;*/
+			
 
-			}
-			if (bearingToEnemy == 0) {
-				Robot.Ahead(100);
-			}
-				return "DefaultState";
+
+			return "Arrive";
 		}
 	}
 }

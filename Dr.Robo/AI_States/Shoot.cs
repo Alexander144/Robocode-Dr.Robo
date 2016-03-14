@@ -38,26 +38,25 @@ namespace Dr.Robo
 		{
 			
 			double absoluteBearing = Robot.Heading + _targetBearing;
-			double bearingToEnemy = Utils.NormalRelativeAngleDegrees(absoluteBearing - Robot.Heading);
+			double bearingToEnemy = Utils.NormalRelativeAngleDegrees(absoluteBearing - Robot.GunHeading);
 			Console.WriteLine(bearingToEnemy);
 			// If it's close enough, fire!
 			if (Math.Abs(bearingToEnemy) <= 0)
 			{
-				Robot.TurnRight(bearingToEnemy);
-				
-				
+				Robot.TurnGunRight(bearingToEnemy);
+
+
 
 			}
 			else
 			{
 				// otherwise just set the gun to turn.
 				// Note:  This will have no effect until we call scan()
-				Robot.TurnRight(bearingToEnemy);
-				
-				
+				Robot.TurnGunRight(bearingToEnemy);
+
+
 			}
 
-			
 			Robot.Fire(3);
 			return "DefaultState";
 		}

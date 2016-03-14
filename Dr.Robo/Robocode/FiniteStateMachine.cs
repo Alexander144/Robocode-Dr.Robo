@@ -67,21 +67,21 @@ namespace Dr.Robo
 		/// </summary>
 		public void Update()
 		{
-			Console.WriteLine(_currentState);
-			_currentState.EnterState();
-		  SwitchState = _currentState.ProcessState();
+			
+			
+		 
 			
 				foreach (var EachState in _possibleStates)
 				{
-				if (EachState.Id == SwitchState && !(SwitchState == _currentState.Id))
+				if (EachState.Id == SwitchState && SwitchState != _currentState.Id)
 				{
 
 					_currentState = EachState;
-
+					SwitchState =_currentState.EnterState();
 				}
 				else
 				{
-					_currentState.ProcessState();
+					 _currentState.ProcessState();
 				}
 			}
 		}

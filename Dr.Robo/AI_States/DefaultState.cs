@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Robocode;
+using Robocode.Util;
 using Santom;
 
 namespace Dr.Robo.Robocode.States
@@ -15,6 +16,7 @@ namespace Dr.Robo.Robocode.States
 		private Point2D _targetBearing;
 		private Point2D _targetPosistion;
 		private double _targetDistance;
+		
 
 		public DefaultState() : base("DefaultState")
 		{
@@ -32,15 +34,20 @@ namespace Dr.Robo.Robocode.States
 		}
 		public override string ProcessState()
 		{
-			
-			Console.WriteLine(_targetDistance);
-		
-			/*if (_targetDistance <700 && _targetDistance >-700)
+			if (Robot.Enemy.LockOn == true)
 			{
-				return "Shoot";
-			}*/
-			
-			return "Arrive";
+				double absoluteBearing = Robot.Heading + Robot.Enemy.BearingDegrees;
+				double moveRadarToEnemy = absoluteBearing - Robot.RadarHeading;
+				Robot.TurnRadarRight(Utils.NormalRelativeAngle(moveRadarToEnemy));
+				Robot.Scan();
+			}
+			else
+			{
+				Robot.TurnRadarRight(20);
+			}
+
+			return base.ToString();
+
 		}
 	}
 }
