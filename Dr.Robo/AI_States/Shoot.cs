@@ -55,11 +55,12 @@ namespace Dr.Robo
 
 		public override string ProcessState()
 		{
-			
-		
 
-			
-			Robot.Fire(3);
+
+			if (Robot.Enemy.LockOn == true)
+			{
+				Robot.Fire(3);
+			}
 			return "DefaultState";
 		}
 	}

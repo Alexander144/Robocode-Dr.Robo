@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI_States\Circle.cs" />
     <Compile Include="AI_States\Seek.cs" />
     <Compile Include="AI_States\Flee.cs" />
     <Compile Include="AI_States\DrvEngage.cs" />

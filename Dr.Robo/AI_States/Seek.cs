@@ -9,7 +9,12 @@ namespace Dr.Robo
 {
 	public class Seek : State
 	{
+		private double _distance;
+		private double _maxprediction;
+		private double _prediction;
+		private double _speed;
 		private double _targetBearing;
+		private double _targetVelocity;
 
 		public Seek() : base("Seek")
 		{
@@ -20,33 +25,69 @@ namespace Dr.Robo
 		// Called once when we transition into this state.
 		public override void EnterState()
 		{
-			_BodyColor = Color.Green; _GunColor = Color.Green; _RadarColor = Color.Green; _BulletColor = Color.Green; _ScanArColor = Color.Green;
+			_BodyColor = Color.Green;
+			_GunColor = Color.Green;
+			_RadarColor = Color.Green;
+			_BulletColor = Color.Green;
+			_ScanArColor = Color.Green;
 
 			base.EnterState();
 			_targetBearing = Robot.Enemy.BearingDegrees;
-			Robot.SetTurnRight(Robot.Enemy.BearingDegrees);
-			Robot.SetAhead(100);
+			_speed = Robot.Velocity;
+
+			_maxprediction = Robot.Enemy.Position.length();
+			_distance = Robot.Enemy.Distance;
+			_targetVelocity = Robot.Enemy.Velocity;
+
 		}
 
 
 		public override string ProcessState()
 		{
+			bool HitWall = WallAvoider();
 			DoScanOnRobot();
-			
-			if (Robot.Enemy.Distance <= 70)
+			Console.WriteLine(HitWall);
+			if (HitWall == false)
 			{
+				if (_speed <= Robot.Enemy.Distance/_maxprediction)
+				{
+					_prediction = _maxprediction;
+					
+				}
+
+				else
+				{
+					_prediction = _distance/_speed;
+				}
+
+
+				Robot.SetTurnRight(_targetBearing);
+				Robot.SetAhead(_prediction);
+
+				if (Robot.Enemy.Distance <= 70)
+				{
+				if (Robot.Energy < 50)
+				{
+					return "Flee";
+				}
+
+					return "Shoot";
 				
-				return "Shoot";
+				}
+				if (Robot.Energy < 50)
+				{
+					return "Flee";
+				}
+
+				return "Seek";
+
 			}
-			Console.WriteLine(Robot.Energy);
-			if (Robot.Energy<50)
+			else
 			{
-				return "Flee";
+				Robot.SetTurnRight(60);
+				Robot.SetAhead(40);
+				return "Seek";
 			}
-
-
-			return "Seek";
-			
 		}
 	}
 }

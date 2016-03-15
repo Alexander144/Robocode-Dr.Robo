@@ -18,7 +18,6 @@ namespace Dr.Robo
 		private const int SpinCount = 10;  // Max number of state transitions in one round before we trigger spin.
 		private readonly State[] _possibleStates;
 		private State _currentState;
-		private State _nextState;
 		private string SwitchState = null;
 		
 	
@@ -37,18 +36,19 @@ namespace Dr.Robo
 		/// <summary>
 		/// Note: Init method MUST be called prior to the first call to Update() !!!
 		/// </summary>
-		public void Init(AdvancedRobotEx ourRobot) 
+		public void Init(AdvancedRobotEx ourRobot)
 		{
+			Robot = ourRobot;
 			// Init all the states
 			foreach (State state in _possibleStates) {
 				state.Init(ourRobot);
 			}
 			// Set the first state in the array as the current state when the FSM is init'ed.
 			_currentState = _possibleStates[0];
-			_nextState = _possibleStates[0];
-		
 
 		}
+
+		public AdvancedRobotEx Robot { get; set; }
 
 
 		/// <summary>
@@ -74,6 +74,8 @@ namespace Dr.Robo
 				{
 					_currentState = each;
 					_currentState.EnterState();
+					
+
 				}
 				else
 				{

@@ -17,7 +17,7 @@ namespace Dr.Robo
 		// -------------------------------------------
 
 		private readonly FiniteStateMachine _fsm;
-		private bool LockOn = false;
+		
 	
 		
 		
@@ -27,7 +27,7 @@ namespace Dr.Robo
 		public DrRobo()
 		{
 			// Defining the possible states for this fsm. (Also, the 1st one listed becomes the default state.)
-			_fsm = new FiniteStateMachine(new State[] { new DefaultState(),new Seek(),new Shoot(),new Flee()  });
+			_fsm = new FiniteStateMachine(new State[] { new DefaultState(),new Seek(),new Shoot(),new Flee(), new Circle()  });
 		}
 
 

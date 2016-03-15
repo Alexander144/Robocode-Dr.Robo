@@ -24,11 +24,15 @@ namespace Dr.Robo
 		public Color _ScanArColor;
 		protected double _PointToEnemy;
 		protected double _absoluteBearing;
+		private double _battleFieldHeight;
+		private double _battleFieldWidth;
+
 
 		// P R O P E R T I E S
 		// -------------------
 
 		public string Id { get; private set; }
+		public EnemyData EnemyTrueLock { get; private set; }
 
 
 		// P U B L I C   M E T H O D S 
@@ -57,6 +61,7 @@ namespace Dr.Robo
 		/// </summary>
 		public virtual bool DoScanOnRobot()
 		{
+
 			//Hvis radaren har funnet en enemy så locker den enemyen
 			if (Robot.Enemy.LockOn == true)
 			{
@@ -66,21 +71,43 @@ namespace Dr.Robo
 				_PointToEnemy = Utils.NormalRelativeAngleDegrees(_absoluteBearing - Robot.RadarHeading);
 
 				//Bestemmer scanne området
-				double ScanArea = Math.Min(Math.Atan(36.0 / Robot.Enemy.Distance), Rules.RADAR_TURN_RATE);
+				double ScanArea = Math.Min(Math.Atan(34 / Robot.Enemy.Distance), Rules.RADAR_TURN_RATE);
 
-				//Dette gjør sånn at vi bestemmer bevegelsesen radaren skal gå i før vi bevger på det. Sikter forran motstanderen sånn at vi skal få en smoothere bevegelse
-				_PointToEnemy += (_PointToEnemy < 0 ? -ScanArea : ScanArea);
+				//Dette gjør sånn at hvis ikke radaren er locket inn, så scanner den områder enten høyere eller venstre i forhold til hvor motstanderen gik
+				_PointToEnemy += _PointToEnemy < 0 ? -ScanArea : ScanArea;
+
+				//Hvis den ikke finner roboten etter 5 enheter, så setter den lockon false for å ta en ny scan av banen
+				if (_PointToEnemy < 60 || _PointToEnemy > 60)
+				{
+					Robot.Enemy.LockOn = false;
+				}
+				
 				Robot.TurnRadarRight(_PointToEnemy);
+				
 				return true;
 			}
 			else
 			{
 				Robot.TurnRadarRight(20);
+				Robot.Scan();
 				return false;
 			}
 		}
 
-	
+		public virtual bool WallAvoider()
+		{
+			_battleFieldWidth = Robot.BattleFieldWidth;
+			_battleFieldHeight = Robot.BattleFieldHeight;
+			if (Robot.X > _battleFieldWidth - 50 || Robot.Y > _battleFieldHeight - 50 || Robot.X < 50 ||
+			   Robot.Y < 50)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 		/// <summary>
 		/// Called once when we transition into this state.
 		/// </summary>
