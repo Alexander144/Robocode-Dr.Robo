@@ -47,13 +47,10 @@
     <Compile Include="AI_States\Circle.cs" />
     <Compile Include="AI_States\Seek.cs" />
     <Compile Include="AI_States\Flee.cs" />
-    <Compile Include="AI_States\DrvEngage.cs" />
     <Compile Include="AI_States\Shoot.cs" />
-    <Compile Include="AI_States\DrvIdle.cs" />
     <Compile Include="DrRobo.cs" />
     <Compile Include="General\MathHelpers.cs" />
     <Compile Include="General\Point2D.cs" />
-    <Compile Include="General\Vector2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Robocode\AdvancedRobotEx.cs" />
     <Compile Include="Robocode\EnemyData.cs" />

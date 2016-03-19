@@ -1,22 +1,14 @@
-﻿using Dr.Robo;
-using Robocode;
+﻿using Robocode;
 using Robocode.Util;
-using Santom;
 
-namespace Dr.Robo
+
+namespace PG4500_2016_Exam1
 {
-	/// <summary>
-	/// Helper class, storing data about scanned enemies (including the timestamp (turn) for that scan of data). 
-	/// version: 1.0
-	/// author: Tomas Sandnes - santom@westerdals.no
-	/// </summary>
 	public class EnemyData
 	{
 
-		// P R O P E R T I E S
-		// -------------------
-
-		// General stuff 
+		// Properties
+		
 		public long Time { get; set; }  // Time (turn) of currently stored scan.
 
 		// Enemy stuff
@@ -33,13 +25,10 @@ namespace Dr.Robo
 		public double TurnRateRadians { get; set; }  // How fast our enemy turns, in radians (change of heading per turn). (Calculated by comparing values over 2 scans.)
 		public double TurnRateDegrees { get { return Utils.ToDegrees(TurnRateRadians); } set { TurnRateRadians = Utils.ToRadians(value); } }  // How fast our enemy turns, in degrees (change of heading per turn). (Calculated by comparing values over 2 scans.)
 		public bool LockOn{ get; set; }
+		public bool CloseToRobot { get; set; }
 
-		// P U B L I C   M E T H O D S 
-		// ---------------------------
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
+		// Public Methods
+		
 		public EnemyData()
 		{
 			Time = 0;
@@ -53,12 +42,9 @@ namespace Dr.Robo
 			HeadingRadians = 0.0;
 			TurnRateRadians = 0.0;
 			LockOn = false;
+			CloseToRobot = false;
 		}
 
-
-		/// <summary>
-		/// Copy constructor.
-		/// </summary>
 		public EnemyData(EnemyData cloneMe)
 		{
 			Time = cloneMe.Time;
@@ -73,10 +59,6 @@ namespace Dr.Robo
 			TurnRateRadians = cloneMe.TurnRateRadians;
 		}
 
-
-		/// <summary>
-		/// Resets this EnemyData instance.
-		/// </summary>
 		public void Clear() 
 		{ 
 			Time = 0;
@@ -90,11 +72,6 @@ namespace Dr.Robo
 			HeadingRadians = 0.0;
 			TurnRateRadians = 0.0;
 		}
-
-
-		/// <summary>
-		/// Sets all EnemyData.
-		/// </summary>
 		public void SetEnemyData(ScannedRobotEvent newEnemyData,
 								 Point2D newPosition)
 		{
@@ -116,6 +93,8 @@ namespace Dr.Robo
 			Position = newPosition;
 			Velocity = newEnemyData.Velocity;
 			HeadingRadians = newEnemyData.HeadingRadians;
+
+			//La til en LockOn, som blir true vær gang radaren har gått over motstanderne.
 			LockOn = true;
 		}
 	}

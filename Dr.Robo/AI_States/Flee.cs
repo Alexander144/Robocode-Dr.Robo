@@ -1,25 +1,29 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-using Santom;
 
-namespace Dr.Robo
+
+namespace PG4500_2016_Exam1
 {
 	public class Flee : State
 	{
-		private double _targetDistance;
 		private Point2D _targetPosition;
+
+		private double _energy;
+
+		private double _targetDistance;
 		private double _targetBearing;
-		private double _Energy;
+		private double _targetEnergy;
 
 		public Flee()
 			: base("Flee")
 		{
-			// Intentionally left blank.
+			_targetPosition = null;
+			_energy = 0;
+			_targetDistance = 0;
+			_targetBearing = 0;
+			_targetEnergy = 0;
 		}
 
-
-		// Called once when we transition into this state.
 		public override void EnterState()
 		{
 			_BodyColor = Color.Yellow;
@@ -27,39 +31,53 @@ namespace Dr.Robo
 			_RadarColor = Color.Yellow;
 			_BulletColor = Color.Yellow;
 			_ScanArColor = Color.Yellow;
+
 			base.EnterState();
+			
+			_energy = Robot.Energy;
 
 			_targetPosition = Robot.Enemy.Position;
 			_targetDistance = Robot.Enemy.Distance;
 			_targetBearing = Robot.Enemy.BearingDegrees;
-			_Energy = Robot.Energy;
+			_targetEnergy = Robot.Enemy.Energy;
 		}
 
 
 		public override string ProcessState()
 		{
 			bool HitWall = WallAvoider();
+
 			DoScanOnRobot();
+
 			if (HitWall == false)
 			{
+				//Hvis motstanderen er langt unna, beveger den seg bakover. Hvis den er nærme, bytt retning. 
 				if (_targetDistance >= 250)
 				{
-					Robot.SetTurnRight(_targetBearing);
+					//Hvis targetbearing er mindre enn 10 grader, så bevege det til høyere til den når under 10 grader. For å kontrollere at den beveger seg en vei.
+					if (!(_targetBearing >= 10)) {
+						Robot.SetTurnRight(_targetBearing);
+					}
 				}
+
 				else
 				{
-					Robot.SetTurnRight(_targetBearing - 180);
 
+					if (!(_targetBearing >= 10))
+					{
+						Robot.SetTurnRight(_targetBearing - 180);
+					}
 				}
-				Console.WriteLine(_targetDistance);
-				if (_Energy < 30)
+				//Hvis du har mer enegi enn motstanderen, så er det ikke noe vits å flykte.
+				if (!(_targetEnergy > _energy + (_energy * (_targetEnergy / 100))))
 				{
-					//return "Circle";
+					return "DefaultState";
 				}
 
-				Robot.SetBack(200);
+				Robot.SetBack(20);
 				return "Flee";
 			}
+
 			else
 			{
 				Robot.SetTurnRight(40);

@@ -1,15 +1,12 @@
 ﻿using System.Drawing;
-
-
-using Robocode.Util;
 using System;
-using System.Net.Http.Headers;
 
-namespace Dr.Robo
+namespace PG4500_2016_Exam1
 {
 	public class Seek : State
 	{
-		private double _distance;
+		private double _targetDistance;
+		private double _energy;
 		private double _maxprediction;
 		private double _prediction;
 		private double _speed;
@@ -18,7 +15,13 @@ namespace Dr.Robo
 
 		public Seek() : base("Seek")
 		{
-			// Intentionally left blank.
+			_targetDistance = 0;
+			_energy = 0;
+			_maxprediction = 0;
+			_prediction = 0;
+			_speed = 0;
+			_targetBearing = 0;
+			_targetVelocity = 0;
 		}
 
 
@@ -36,20 +39,27 @@ namespace Dr.Robo
 			_speed = Robot.Velocity;
 
 			_maxprediction = Robot.Enemy.Position.length();
-			_distance = Robot.Enemy.Distance;
-			_targetVelocity = Robot.Enemy.Velocity;
+			
+			_energy = Robot.Energy;
 
+			_targetDistance = Robot.Enemy.Distance;
+			_targetVelocity = Robot.Enemy.Velocity;
 		}
 
 
 		public override string ProcessState()
 		{
+			//Henter inn wallAvoideren som retunerer true hvis den er nærheten av veggen eller false hvis den ikke er det.
+			//DoScanOnRobot beveger radaren etter fienden og scanner hvis den ikke har noen i sikte.
 			bool HitWall = WallAvoider();
 			DoScanOnRobot();
-			Console.WriteLine(HitWall);
+		
 			if (HitWall == false)
 			{
-				if (_speed <= Robot.Enemy.Distance/_maxprediction)
+				//Hvis speed er mindre en avstand fra motstanderen / avstand
+				Console.WriteLine("maxpred er " + _maxprediction);
+				
+				if (_speed <= _targetDistance/_maxprediction)
 				{
 					_prediction = _maxprediction;
 					
@@ -57,27 +67,20 @@ namespace Dr.Robo
 
 				else
 				{
-					_prediction = _distance/_speed;
+					_prediction = _targetDistance/_speed;
 				}
 
 
 				Robot.SetTurnRight(_targetBearing);
 				Robot.SetAhead(_prediction);
+				//Er den innenfor 70 i avstand og den beveger seg mindre enn 5, så skal den skyte.
+				if (_targetDistance <= 70 && _targetVelocity <= 5)
+				{
 
-				if (Robot.Enemy.Distance <= 70)
-				{
-				if (Robot.Energy < 50)
-				{
-					return "Flee";
+					Robot.Enemy.CloseToRobot = true;
+					return "Shoot";				
 				}
-
-					return "Shoot";
 				
-				}
-				if (Robot.Energy < 50)
-				{
-					return "Flee";
-				}
 
 				return "Seek";
 
